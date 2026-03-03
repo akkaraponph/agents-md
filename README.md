@@ -331,6 +331,34 @@ Never leak:
 >
 > Make performance intentional.
 
+## Environment Configuration Strategy (.env Handling)
+
+### 🎯 Environment Principle
+Configuration must follow 12-Factor principles:
+- Environment variables are the single source of truth.
+- `.env` is used for **local development only**.
+- Production must rely on injected environment variables (Docker, CI/CD, Cloud).
+
+---
+
+## 📦 Library Standard
+
+We use:
+- `github.com/joho/godotenv` → load `.env` in development
+- `github.com/caarlos0/env/v11` → parse env into strongly typed struct
+
+We DO NOT use configuration frameworks like Viper to avoid:
+- Global state
+- Hidden overrides
+- Implicit magic behavior
+
+---
+
+## 🏗 Location
+
+All configuration logic MUST live in:
+
+
 ---
 
 # 🏁 Summary Cheat Sheet
@@ -345,3 +373,4 @@ Never leak:
 | Large service      | Split by use case          |
 | Connection full    | Context + DB tuning        |
 | Data inconsistency | Transaction + atomic queue |
+
